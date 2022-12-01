@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react";
+import { Container } from "reactstrap";
 import { useParams } from "react-router-dom";
 
+import List from "../components/List";
+import CommitItem from "../components/CommitItem";
 import { listCommits } from "../api/commits";
 
 const Commits = () => {
@@ -23,12 +26,11 @@ const Commits = () => {
   }, [owner, repo]);
 
   return (
-    <>
+    <Container>
       <h2>Commits</h2>
-      {commits.map(({ sha, email }) => (
-        <p key={sha}>{email}</p>
-      ))}
-    </>
+      <hr className="my-2" />
+      <List keyName="sha" items={commits} renderItem={CommitItem} />
+    </Container>
   );
 };
 
