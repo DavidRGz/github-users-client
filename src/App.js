@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Users from "./pages/Users";
 import Repos from "./pages/Repos";
 import Commits from "./pages/Commits";
+import "./assets/css/styles.css";
 
 const App = () => {
   return (
