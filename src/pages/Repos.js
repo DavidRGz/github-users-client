@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { Container } from "reactstrap";
 
+import List from "../components/List";
+import RepoItem from "../components/RepoItem";
 import { listRepos } from "../api/repos";
 
 const Repos = () => {
@@ -18,12 +21,10 @@ const Repos = () => {
   }, [username]);
 
   return (
-    <>
+    <Container>
       <h2>Repos</h2>
-      {repos.map(({ id, name }) => (
-        <p key={id}>{name}</p>
-      ))}
-    </>
+      <List items={repos} renderItem={RepoItem} />
+    </Container>
   );
 };
 
