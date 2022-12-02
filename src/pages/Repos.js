@@ -1,28 +1,16 @@
-import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useState } from "react";
 import { Container } from "reactstrap";
 
 import List from "../components/List";
 import RepoItem from "../components/RepoItem";
 import Pagination from "../components/Pagination";
+import useRepos from "../hooks/useRepos";
 import useScrollToTop from "../hooks/useScrollToTop";
-import { listRepos } from "../api/repos";
 
 const Repos = () => {
-  const { username } = useParams();
-  const [repos, setRepos] = useState([]);
   const [cursor, setCursor] = useState(1);
+  const { repos, loading } = useRepos(cursor);
   useScrollToTop(repos);
-
-  useEffect(() => {
-    listRepos({ username, page: cursor, per_page: 10 })
-      .then((data) => {
-        setRepos(data);
-      })
-      .catch((error) => {
-        alert(error.response?.data?.message || error.message);
-      });
-  }, [username, cursor]);
 
   return (
     <Container>
@@ -35,6 +23,7 @@ const Repos = () => {
         onChange={setCursor}
         isFirst={cursor === 1}
         isLast={repos.length < 10}
+        loading={loading}
       />
     </Container>
   );

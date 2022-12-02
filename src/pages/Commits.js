@@ -1,33 +1,16 @@
-import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useState } from "react";
 import { Container } from "reactstrap";
 
 import List from "../components/List";
 import CommitItem from "../components/CommitItem";
 import Pagination from "../components/Pagination";
+import useCommits from "../hooks/useCommits";
 import useScrollToTop from "../hooks/useScrollToTop";
-import { listCommits } from "../api/commits";
 
 const Commits = () => {
-  const { owner, repo } = useParams();
-  const [commits, setCommits] = useState([]);
   const [cursor, setCursor] = useState(1);
+  const { commits, loading } = useCommits(cursor);
   useScrollToTop(commits);
-
-  useEffect(() => {
-    listCommits({
-      owner,
-      repo,
-      page: cursor,
-      per_page: 10,
-    })
-      .then((data) => {
-        setCommits(data);
-      })
-      .catch((error) => {
-        alert(error.response?.data?.message || error.message);
-      });
-  }, [owner, repo, cursor]);
 
   return (
     <Container>
@@ -40,6 +23,7 @@ const Commits = () => {
         onChange={setCursor}
         isFirst={cursor === 1}
         isLast={commits.length < 10}
+        loading={loading}
       />
     </Container>
   );

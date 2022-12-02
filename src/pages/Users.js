@@ -1,26 +1,16 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Container } from "reactstrap";
 
 import List from "../components/List";
 import UserItem from "../components/UserItem";
 import Pagination from "../components/Pagination";
+import useUsers from "../hooks/useUsers";
 import useScrollToTop from "../hooks/useScrollToTop";
-import { listUsers } from "../api/users";
 
 const Users = () => {
-  const [users, setUsers] = useState([]);
   const [cursor, setCursor] = useState(0);
+  const { users, loading } = useUsers(cursor);
   useScrollToTop(users);
-
-  useEffect(() => {
-    listUsers({ since: cursor, per_page: 10 })
-      .then((data) => {
-        setUsers(data);
-      })
-      .catch((error) => {
-        alert(error.response?.data?.message || error.message);
-      });
-  }, [cursor]);
 
   return (
     <Container>
@@ -33,6 +23,7 @@ const Users = () => {
         onChange={setCursor}
         isFirst={cursor === 0}
         isLast={users.length < 10}
+        loading={loading}
       />
     </Container>
   );
