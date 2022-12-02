@@ -7,7 +7,7 @@ const CommitItem = ({ sha, name, email, date, message }) => {
   return (
     <Row className="align-items-center">
       <Col>
-        <p className="lead m-0">{sha}</p>
+        <p className="lead text-truncate m-0">{sha}</p>
         <p className="text-muted m-0">
           {name} ({email})
         </p>

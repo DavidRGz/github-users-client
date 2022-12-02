@@ -4,11 +4,13 @@ import { Container } from "reactstrap";
 import List from "../components/List";
 import UserItem from "../components/UserItem";
 import Pagination from "../components/Pagination";
+import useScrollToTop from "../hooks/useScrollToTop";
 import { listUsers } from "../api/users";
 
 const Users = () => {
   const [users, setUsers] = useState([]);
   const [cursor, setCursor] = useState(0);
+  useScrollToTop(users);
 
   useEffect(() => {
     listUsers({ since: cursor, per_page: 10 })

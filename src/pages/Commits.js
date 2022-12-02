@@ -1,16 +1,18 @@
 import { useEffect, useState } from "react";
-import { Container } from "reactstrap";
 import { useParams } from "react-router-dom";
+import { Container } from "reactstrap";
 
 import List from "../components/List";
 import CommitItem from "../components/CommitItem";
 import Pagination from "../components/Pagination";
+import useScrollToTop from "../hooks/useScrollToTop";
 import { listCommits } from "../api/commits";
 
 const Commits = () => {
   const { owner, repo } = useParams();
   const [commits, setCommits] = useState([]);
   const [cursor, setCursor] = useState(1);
+  useScrollToTop(commits);
 
   useEffect(() => {
     listCommits({

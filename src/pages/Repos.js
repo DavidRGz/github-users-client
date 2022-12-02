@@ -5,12 +5,14 @@ import { Container } from "reactstrap";
 import List from "../components/List";
 import RepoItem from "../components/RepoItem";
 import Pagination from "../components/Pagination";
+import useScrollToTop from "../hooks/useScrollToTop";
 import { listRepos } from "../api/repos";
 
 const Repos = () => {
   const { username } = useParams();
   const [repos, setRepos] = useState([]);
   const [cursor, setCursor] = useState(1);
+  useScrollToTop(repos);
 
   useEffect(() => {
     listRepos({ username, page: cursor, per_page: 10 })
